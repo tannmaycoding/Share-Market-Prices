@@ -1,12 +1,14 @@
 import streamlit as st
 import pandas as pd
+import sqlalchemy
 
 st.title("Log In")
 usernameOrEmail = st.text_input("Username or Email Address: ")
 password = st.text_input("Password: ")
+engine = sqlalchemy.create_engine("mysql+pymysql://root:monadarling123@localhost:3306/accounts")
 
 if st.button("Log In"):
-    df = pd.read_excel("ids.xlsx")
+    df = pd.read_sql("share-market-login", con=engine)
     print(df)
 
     if not ((df['username'] == usernameOrEmail).any() or (df['email'] == usernameOrEmail).any()):
