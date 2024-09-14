@@ -6,7 +6,6 @@ st.title("Sign Up")
 username = st.text_input("Username: ")
 emailId = st.text_input("Email address: ")
 password = st.text_input("Password: ")
-splChars = ["'", "=", "+", "-", "*", "/", "^", "@", "#", "$", "%", "&", "(", ")"]
 engine = sqlalchemy.create_engine("mysql+pymysql://your-username:your-SQL-password@address-it-is-on:3306/accounts")
 
 if st.button("Sign Up"):
