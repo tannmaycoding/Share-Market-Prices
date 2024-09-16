@@ -1,4 +1,4 @@
-[MATHS+SCIENCE+SST_SAMPLEPAPER_T1_CLASS8.pdf](https://github.com/user-attachments/files/17011418/MATHS%2BSCIENCE%2BSST_SAMPLEPAPER_T1_CLASS8.pdf)# Share-Market-Prices
+# Share-Market-Prices
 This gives you historical prices of an NSE share. It is different from Share-Market-Prices-v2 because:
 - More functionalities
    - Log In
