@@ -17,7 +17,7 @@ The working:
      1. Has input fields for username, email, password
      2. When you press `Sign Up`
         - Opens `share-market-login` table from database accounts on engine `engine`
-        - Checks if there is ` ` ` in username
+        - Checks if there is `` ` `` in username
         - Checks if username exists
         - Checks if password exists
         - If any check is false it shows error of its own
