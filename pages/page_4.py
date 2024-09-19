@@ -68,24 +68,15 @@ if st.button("Get Graph"):
         st.line_chart(df)
 
 if start_date != end_date:
-
     if st.button("Download Prices"):
-        download_count += 1
-
-        if download_count >= 10:
-            st.error("Download Limit Reached For A guest Account")
-            st.stop()
-
-        else:
-            data = fetch_prices()
-
-            if data is not None:
-                csv_data = convert_df(data)
-                st.success("Everything is done")
-                st.download_button(
-                    label="Click here to download",
-                    data=csv_data,
-                    file_name=f"{name}.csv",
-                    mime="text/csv"
-                )
+        data = fetch_prices()
+        if data is not None:
+          csv_data = convert_df(data)
+          st.success("Everything is done")
+          st.download_button(
+              label="Click here to download",
+              data=csv_data,
+              file_name=f"{name}.csv",
+              mime="text/csv"
+          )
               
