@@ -7,9 +7,6 @@ name = st.text_input("Name Of The Share: ")
 
 start, end = st.columns(2, vertical_alignment="top")
 
-download_count = 0
-graph_count = 0
-
 sdate = start.selectbox("Start Date", options=["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
                                                "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24",
                                                "25", "26", "27", "28", "29", "30", "31"])
@@ -35,12 +32,23 @@ eyear = end.selectbox("End Year", options=["2024", "2023", "2022", "2021", "2020
 start_date = f"{sdate}-{smonth}-{syear}"
 end_date = f"{edate}-{emonth}-{eyear}"
 
+if 'services_count' not in st.session_state:
+    st.session_state.count = 0
+
 
 @st.cache_data
 def fetch_prices():
     try:
-        d = capital_market.price_volume_and_deliverable_position_data(name, start_date, end_date)
-        return d
+        # Increment services count each time this function is called
+        st.session_state.count += 1
+
+        if st.session_state.count >= 20:
+            st.error("You have reached the limit for accessing services for a guest account.")
+            st.stop()
+
+        else:
+            d = capital_market.price_volume_and_deliverable_position_data(name, start_date, end_date)
+            return d
 
     except Exception as e:
         st.error(f"Error fetching data: {e}")
@@ -54,18 +62,10 @@ def convert_df(dataframe: pd.DataFrame):
 
 
 if st.button("Get Graph"):
-    graph_count += 1
-
-    if graph_count >= 10:
-        st.error("Limit For Accessing Graphs Has ReachedFor A Guest Account")
-        st.stop()
-
-    else:
-        data = fetch_prices()
-
-        if data is not None:
-            df = data[["OpenPrice", "HighPrice", "LowPrice", "ClosePrice", "LastPrice", "AveragePrice"]]
-            st.line_chart(df)
+    data = fetch_prices()
+    if data is not None:
+        df = data[["OpenPrice", "HighPrice", "LowPrice", "ClosePrice", "LastPrice", "AveragePrice"]]
+        st.line_chart(df)
 
 if start_date != end_date:
 
@@ -88,3 +88,4 @@ if start_date != end_date:
                     file_name=f"{name}.csv",
                     mime="text/csv"
                 )
+              
